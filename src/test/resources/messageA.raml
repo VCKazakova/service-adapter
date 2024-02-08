@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: MsgA
+properties:
+  msg:
+    type: string
+    description: Некое текстовое сообщение
+    required: true
+  Ing:
+    type: string
+    enum: [ru, en, es]
+    description: Язык сообщения
+    required: true
+  coordinates:
+    properties:
+      latitude:
+        type: string
+        description: Широта
+        required: true
+      longitude:
+        type: string
+        description: Долгота
+        required: true
+example:
+  {
+    "msg": "Привет",
+    "Ing": "ru",
+    "coordinates": {
+      "latitude": "54.35",
+      "longitude": "52.52"
+    }
+  }
