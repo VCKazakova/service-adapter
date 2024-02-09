@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class MessageMapperImpl implements MessageMapper {
+public class MessageBFactoryImpl implements MessageBFactory {
 
-    public RsDtoMessageB mapMessageB(GisMeteoMessage gisMeteoMessage) {
+    public RsDtoMessageB create(GisMeteoMessage gisMeteoMessage) {
         return Optional.ofNullable(gisMeteoMessage)
                 .map(GisMeteoMessage::getTemperature)
                 .map(Temperature::getAir)
