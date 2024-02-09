@@ -1,11 +1,13 @@
 package com.hawking.bros.domain.mainService;
 
-import com.hawking.bros.domain.dto.Coordinates;
-import com.hawking.bros.domain.dto.MessageA;
+import com.hawking.bros.domain.dto.Ing;
+import com.hawking.bros.domain.dto.RqDtoCoordinates;
+import com.hawking.bros.domain.dto.RqDtoMessageA;
 import com.hawking.bros.domain.mainService.richService.RichService;
-import com.hawking.bros.domain.mainService.richService.dto.MessageB;
+import com.hawking.bros.domain.mainService.richService.feign.dto.GisMeteoMessage;
+import com.hawking.bros.domain.mainService.richService.feign.dto.Temperature;
+import com.hawking.bros.domain.mainService.richService.feign.dto.TemperatureDetails;
 import com.hawking.bros.domain.mainService.sendService.SendService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.*;
 
@@ -33,39 +33,34 @@ class ServiceOrchestratorImplTest {
     @Mock
     private SendService sendService;
 
-    private MessageA messageAWithRu;
-    private MessageB messageB;
-    private MessageA messageAWithEn;
+    private RqDtoMessageA rsDtoMessageWithRu;
+    private RqDtoMessageA rqDtoMessageAWithEn;
+    private GisMeteoMessage gisMeteoMessage;
 
     @BeforeAll
     public void init() {
-        messageAWithRu = new MessageA("Привет", "ru", new Coordinates("54.35", "52.52"));
-        messageB = new MessageB("Привет", LocalDateTime.now(), 28);
-        messageAWithEn = new MessageA("Привет", "en", new Coordinates("54.35", "52.52"));
+        rsDtoMessageWithRu = new RqDtoMessageA("Привет", Ing.ru, new RqDtoCoordinates("54.35", "52.52"));
+        rqDtoMessageAWithEn = new RqDtoMessageA("Привет", Ing.en, new RqDtoCoordinates("54.35", "52.52"));
+        gisMeteoMessage = new GisMeteoMessage(new Temperature(new TemperatureDetails(12.5)));
     }
 
     @Test
     @DisplayName("обработать и отправить сообщение")
     public void handleMessageTest() {
-        when(richService.richMessage(messageAWithRu)).thenReturn(messageB);
-        when(sendService.sendMessage(messageB)).thenReturn("ok");
+        when(richService.richMessage(rsDtoMessageWithRu)).thenReturn(gisMeteoMessage);
+        doNothing().when(sendService).sendMessage(gisMeteoMessage);
 
-        String result = serviceOrchestrator.handleMessage(messageAWithRu);
+        serviceOrchestrator.handleMessage(rsDtoMessageWithRu);
 
-        verify(richService, times(1)).richMessage(messageAWithRu);
-        verify(sendService, times(1)).sendMessage(messageB);
-        Assertions.assertEquals("ok", result);
+        verify(richService, times(1)).richMessage(rsDtoMessageWithRu);
+        verify(sendService, times(1)).sendMessage(gisMeteoMessage);
     }
 
     @Test
     @DisplayName("не обрабатывать и не отправлять сообщение")
     public void handleMessageWithEnIngTest() {
-
-        String result = serviceOrchestrator.handleMessage(messageAWithEn);
-
-        verify(richService, times(0)).richMessage(messageAWithEn);
+        verify(richService, times(0)).richMessage(rqDtoMessageAWithEn);
         verify(sendService, times(0)).sendMessage(any());
-        Assertions.assertNull(result);
     }
 
 }
