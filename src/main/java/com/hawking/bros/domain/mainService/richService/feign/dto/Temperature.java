@@ -1,4 +1,4 @@
-package com.hawking.bros.domain.mainService.richService.dto;
+package com.hawking.bros.domain.mainService.richService.feign.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

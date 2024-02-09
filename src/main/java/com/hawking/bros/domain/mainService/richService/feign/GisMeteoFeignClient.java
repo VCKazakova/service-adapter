@@ -1,6 +1,6 @@
-package com.hawking.bros.domain.mainService.richService;
+package com.hawking.bros.domain.mainService.richService.feign;
 
-import com.hawking.bros.domain.mainService.richService.dto.GisMeteoMessage;
+import com.hawking.bros.domain.mainService.richService.feign.dto.GisMeteoMessage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

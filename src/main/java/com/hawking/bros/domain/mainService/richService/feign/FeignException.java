@@ -1,4 +1,4 @@
-package com.hawking.bros.domain.mainService.richService;
+package com.hawking.bros.domain.mainService.richService.feign;
 
 public class FeignException extends RuntimeException {
 

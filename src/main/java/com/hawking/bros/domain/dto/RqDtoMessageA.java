@@ -21,4 +21,11 @@ public class RqDtoMessageA {
     @JsonProperty(value = "coordinates")
     RqDtoCoordinates rqDtoCoordinates;
 
+    public String getLatitude() {
+        return rqDtoCoordinates.getLatitude();
+    }
+
+    public String getLongitude() {
+        return rqDtoCoordinates.getLongitude();
+    }
 }
