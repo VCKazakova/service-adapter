@@ -2,8 +2,6 @@ package com.hawking.bros.domain;
 
 import com.hawking.bros.domain.dto.MessageA;
 import com.hawking.bros.domain.mainService.ServiceOrchestrator;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
