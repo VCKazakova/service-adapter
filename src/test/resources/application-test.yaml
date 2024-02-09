@@ -1,0 +1,9 @@
+gisMeteo:
+  token: test.token
+spring:
+  cloud:
+    openfeign:
+      client:
+        url:
+          gismeteo: https://test.gismeteo
+          serviceB: https://test.serviceB

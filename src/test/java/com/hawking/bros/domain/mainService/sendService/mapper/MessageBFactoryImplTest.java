@@ -33,7 +33,7 @@ class MessageBFactoryImplTest {
     @Test
     @DisplayName("кидать исключение, если в сообщении нет данных")
     public void mapMessageBReturnEmptyMessageTest() {
-        assertThrows(RuntimeException.class, () -> messageBFactory.create(new GisMeteoMessage(new Temperature())));
+        assertThrows(RuntimeException.class, () -> messageBFactory.create(new GisMeteoMessage(new Temperature(null))));
     }
 
 }

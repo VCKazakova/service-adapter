@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "gismeteo", url = "https://api.gismeteo.net")
+@FeignClient(name = "gismeteo", url = "${spring.cloud.openfeign.client.url.gismeteo}")
 public interface GisMeteoFeignClient {
 
     @GetMapping("/v2/weather/current/")

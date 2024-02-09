@@ -1,2 +1,9 @@
 gisMeteo:
   token: 56b30cb255.3443075
+spring:
+  cloud:
+    openfeign:
+      client:
+        url:
+          gismeteo: https://api.gismeteo.net
+          serviceB: https://serviceB.com
