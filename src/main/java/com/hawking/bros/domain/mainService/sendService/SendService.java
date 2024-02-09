@@ -1,9 +1,9 @@
 package com.hawking.bros.domain.mainService.sendService;
 
-import com.hawking.bros.domain.mainService.richService.dto.MessageB;
+import com.hawking.bros.domain.mainService.richService.feign.dto.GisMeteoMessage;
 
 public interface SendService {
 
-    String sendMessage(MessageB messageB);
+    void sendMessage(GisMeteoMessage gisMeteoMessage);
 
 }
