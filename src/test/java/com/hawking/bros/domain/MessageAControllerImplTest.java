@@ -1,8 +1,9 @@
 package com.hawking.bros.domain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hawking.bros.domain.dto.Coordinates;
-import com.hawking.bros.domain.dto.MessageA;
+import com.hawking.bros.domain.dto.Ing;
+import com.hawking.bros.domain.dto.RqDtoCoordinates;
+import com.hawking.bros.domain.dto.RqDtoMessageA;
 import com.hawking.bros.domain.mainService.ServiceOrchestrator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -29,36 +30,36 @@ class MessageAControllerImplTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private MessageA correctMessageA;
-    private MessageA messageAWithoutMsg;
-    private MessageA messageAWithoutIng;
-    private MessageA messageAWithoutLatitude;
-    private MessageA messageAWithoutLongitude;
+    private RqDtoMessageA correctRqDtoMessageA;
+    private RqDtoMessageA rqDtoMessageAWithoutMsg;
+    private RqDtoMessageA rqDtoMessageAWithoutIng;
+    private RqDtoMessageA rqDtoMessageAWithoutLatitude;
+    private RqDtoMessageA rqDtoMessageAWithoutLongitude;
 
     @BeforeAll
     public void init() {
-        correctMessageA = new MessageA("Привет", "ru", new Coordinates("54.35", "52.52"));
-        messageAWithoutMsg = new MessageA("", "ru", new Coordinates("54.35", "52.52"));
-        messageAWithoutIng = new MessageA("Привет", null, new Coordinates("54.35", "52.52"));
-        messageAWithoutLatitude = new MessageA("Привет", "ru", new Coordinates(null, "52.52"));
-        messageAWithoutLongitude = new MessageA("Привет", "ru", new Coordinates("54.35", null));
+        correctRqDtoMessageA = new RqDtoMessageA("Привет", Ing.ru, new RqDtoCoordinates("54.35", "52.52"));
+        rqDtoMessageAWithoutMsg = new RqDtoMessageA("", Ing.ru, new RqDtoCoordinates("54.35", "52.52"));
+        rqDtoMessageAWithoutIng = new RqDtoMessageA("Привет", null, new RqDtoCoordinates("54.35", "52.52"));
+        rqDtoMessageAWithoutLatitude = new RqDtoMessageA("Привет", Ing.ru, new RqDtoCoordinates(null, "52.52"));
+        rqDtoMessageAWithoutLongitude = new RqDtoMessageA("Привет", Ing.ru, new RqDtoCoordinates("54.35", null));
     }
 
     @Test
     @DisplayName("обработать сообщение, если переданы корректные данные")
     public void richMessageTest() throws Exception {
-        mockMvc.perform(post("/v1/messages/messageA")
+        mockMvc.perform(post("/v1/messages")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(correctMessageA)))
+                        .content(objectMapper.writeValueAsString(correctRqDtoMessageA)))
                 .andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("выбросить исключение, если не передан msg")
     public void richMessageThrowsValidationExceptionWithoutMsgTest() throws Exception {
-        mockMvc.perform(post("/v1/messages/messageA")
+        mockMvc.perform(post("/v1/messages")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(messageAWithoutMsg)))
+                        .content(objectMapper.writeValueAsString(rqDtoMessageAWithoutMsg)))
                 .andExpect(status().isBadRequest());
     }
 
@@ -66,27 +67,27 @@ class MessageAControllerImplTest {
     @Test
     @DisplayName("выбросить исключение, если не передан ing")
     public void richMessageThrowsValidationExceptionWithoutIngTest() throws Exception {
-        mockMvc.perform(post("/v1/messages/messageA")
+        mockMvc.perform(post("/v1/messages")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(messageAWithoutIng)))
+                        .content(objectMapper.writeValueAsString(rqDtoMessageAWithoutIng)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("выбросить исключение, если не передан latitude")
     public void richMessageThrowsValidationExceptionWithoutLatitudeTest() throws Exception {
-        mockMvc.perform(post("/v1/messages/messageA")
+        mockMvc.perform(post("/v1/messages")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(messageAWithoutLatitude)))
+                        .content(objectMapper.writeValueAsString(rqDtoMessageAWithoutLatitude)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("выбросить исключение, если не передан longitude")
     public void richMessageThrowsValidationExceptionWithoutLongitudeTest() throws Exception {
-        mockMvc.perform(post("/v1/messages/messageA")
+        mockMvc.perform(post("/v1/messages")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(messageAWithoutLongitude)))
+                        .content(objectMapper.writeValueAsString(rqDtoMessageAWithoutLongitude)))
                 .andExpect(status().isBadRequest());
     }
 

@@ -2,21 +2,17 @@ package com.hawking.bros.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Coordinates {
+@Value
+public class RqDtoCoordinates {
 
-    @JsonProperty("latitude")
+    @JsonProperty(value = "latitude", required = true)
     @NotBlank(message = "Широта должна быть указана")
-    private String latitude;
+    String latitude;
 
-    @JsonProperty("longitude")
+    @JsonProperty(value = "longitude", required = true)
     @NotBlank(message = "Долгота должна быть указана")
-    private String longitude;
+    String longitude;
 
 }
