@@ -27,12 +27,12 @@ class RichServiceImplTest {
     @Mock
     private GisMeteoFeignClient gisMeteoFeignClient;
 
-    private final GisMeteoMessage gisMeteoMessage = new GisMeteoMessage(new Temperature(new TemperatureDetails(2.1)));
-    private final RqDtoMessageA rqDtoMessageA = new RqDtoMessageA("Привет", Ing.ru, new RqDtoCoordinates("55.6", "33.8"));
-
     @Test
     @DisplayName("успешно возвращать результат от gismeteo")
     public void richMessageTest() {
+        GisMeteoMessage gisMeteoMessage = new GisMeteoMessage(new Temperature(new TemperatureDetails(2.1)));
+        RqDtoMessageA rqDtoMessageA = new RqDtoMessageA("Привет", Ing.ru, new RqDtoCoordinates("55.6", "33.8"));
+
         when(gisMeteoFeignClient.getWeather(null, 55.6d, 33.8d)).thenReturn(gisMeteoMessage);
 
         GisMeteoMessage result = richService.richMessage(rqDtoMessageA);
